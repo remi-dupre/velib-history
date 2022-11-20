@@ -1,0 +1,28 @@
+.station-view {
+  max-width: 800px;
+  margin: 0 40px;
+}
+
+.station-view h2 {
+  text-align: center;
+  font-size: 2em;
+}
+
+.station-view .fill-circle {
+  height: 120px;
+}
+
+.station-view .recap {
+  display: flex;
+  align-items: center;
+}
+
+.station-view .recap > * {
+  display: inline-block;
+}
+
+.station-view .recap > .detail {
+  display: inline-block;
+  list-style: none;
+  font-size: 1.5em;
+}

@@ -1,0 +1,23 @@
+.fill-circle {
+  transform: rotate(-90deg);
+}
+
+.fill-circle circle {
+  fill: none;
+  stroke-width: 6%;
+  stroke-dasharray: 100 100;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.fill-circle .background {
+  stroke: #e2eff0;
+}
+
+.fill-circle .mecanicle {
+  stroke: var(--velib-mecanical-color);
+}
+
+.fill-circle .ebike {
+  stroke: var(--velib-ebike-color);
+}
