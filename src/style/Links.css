@@ -1,0 +1,22 @@
+.links {
+  padding: 0;
+  margin: 0;
+}
+
+.links li {
+  list-style: none;
+  padding: 4px 16px;
+}
+
+.links a {
+  color: darkblue;
+  display: block;
+  padding: 10px 0;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.links a:hover {
+  padding-bottom: 8px;
+  border-bottom: solid 2px darkblue;
+}

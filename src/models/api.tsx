@@ -26,4 +26,5 @@ export type StationInformation = {
 export type StationDetail = {
   info: StationInformation;
   current_status: StationStatus;
+  history: StationStatus[];
 };

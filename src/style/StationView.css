@@ -1,28 +1,74 @@
 .station-view {
-  max-width: 800px;
-  margin: 0 40px;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  gap: 20px;
 }
 
 .station-view h2 {
-  text-align: center;
   font-size: 2em;
-}
-
-.station-view .fill-circle {
-  height: 120px;
+  margin-top: 0;
 }
 
 .station-view .recap {
+  margin-left: 20px;
+  margin-bottom: 60px;
   display: flex;
   align-items: center;
 }
 
-.station-view .recap > * {
-  display: inline-block;
-}
-
-.station-view .recap > .detail {
-  display: inline-block;
+.station-view .recap .detail {
   list-style: none;
   font-size: 1.5em;
+  margin: 0;
+}
+
+.station-view .last-update {
+  font-size: small;
+  color: gray;
+}
+
+.station-view .main-column {
+  flex: 3 3 600px;
+}
+
+.station-view .side-column {
+  flex: 1 1 300px;
+}
+
+.side-column h3 {
+  margin-bottom: 4px;
+}
+
+.stations-list {
+  list-style: none;
+  padding: 0px 16px;
+}
+
+.stations-list li {
+  margin: 0;
+  padding: 10px 0;
+  display: flex;
+}
+
+.stations-list .detail {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.stations-list .detail h4 {
+  margin: 0;
+  display: inline;
+}
+
+.stations-list .detail p {
+  margin: 0;
+  display: inline;
+}
+
+.stations-list .graph {
+  margin-left: auto;
+  width: 50px;
+  background: lightgray;
 }

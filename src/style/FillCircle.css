@@ -1,23 +1,44 @@
+.fill-circle-container {
+  position: relative;
+}
+
 .fill-circle {
   transform: rotate(-90deg);
 }
 
 .fill-circle circle {
   fill: none;
-  stroke-width: 6%;
+  stroke-width: 10%;
   stroke-dasharray: 100 100;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 1s ease-in-out;
 }
 
 .fill-circle .background {
   stroke: #e2eff0;
 }
 
-.fill-circle .mecanicle {
-  stroke: var(--velib-mecanical-color);
+.fill-circle .mechanical {
+  stroke: var(--velib-mechanical-color);
 }
 
 .fill-circle .ebike {
   stroke: var(--velib-ebike-color);
+}
+
+.total-container {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.total-container .total {
+  font-size: 3em;
+  line-height: 1em;
+}
+
+.total-container .label {
+  font-size: small;
 }

@@ -6,10 +6,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --velib-mecanical-color: #2fb300;
-  --velib-ebike-color: #1bb1fb;
+  --velib-mechanical-color: #78b648;
+  --velib-ebike-color: #61c3dc;
+  --velib-mechanical-color-dark: #476f29;
+  --velib-ebike-color-dark: #3d7e8e;
 }
 
-#app {
-  margin: 20px;
+#root {
+  padding: 20px;
+}
+
+@media screen and (min-width: 1400px) {
+  #root {
+    padding-top: 80px;
+  }
 }

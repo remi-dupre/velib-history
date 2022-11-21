@@ -1,0 +1,23 @@
+.history-tooltip {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  background: white;
+  border: solid 1px;
+  border-radius: 5px;
+}
+
+.history-tooltip > * {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+.history-tooltip .detail {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.history-tooltip h5 {
+  margin: 0;
+}
