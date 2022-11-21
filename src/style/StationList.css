@@ -1,0 +1,39 @@
+.stations-list {
+  list-style: none;
+  padding-left: 16px;
+}
+
+.stations-list a {
+  display: inherit;
+  color: inherit;
+  text-decoration: inherit;
+  width: 100%;
+}
+
+.stations-list li {
+  margin: 0;
+  padding: 10px 0;
+  display: flex;
+}
+
+.stations-list .detail {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.stations-list .detail h4 {
+  margin: 0;
+  display: inline;
+}
+
+.stations-list .detail p {
+  margin: 0;
+  display: inline;
+}
+
+.stations-list .graph {
+  margin-left: auto;
+  width: 60px;
+  background: lightgray;
+  border-radius: 5px;
+}

@@ -12,8 +12,8 @@
 }
 
 .station-view .recap {
-  margin-left: 20px;
-  margin-bottom: 60px;
+  margin-left: 40px;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
 }
@@ -21,7 +21,7 @@
 .station-view .recap .detail {
   list-style: none;
   font-size: 1.5em;
-  margin: 0;
+  margin: 0 10px;
 }
 
 .station-view .last-update {
@@ -44,34 +44,6 @@
 .stations-list {
   list-style: none;
   padding-left: 16px;
-}
-
-.stations-list li {
-  margin: 0;
-  padding: 10px 0;
-  display: flex;
-}
-
-.stations-list .detail {
-  margin-left: 8px;
-  font-size: 14px;
-}
-
-.stations-list .detail h4 {
-  margin: 0;
-  display: inline;
-}
-
-.stations-list .detail p {
-  margin: 0;
-  display: inline;
-}
-
-.stations-list .graph {
-  margin-left: auto;
-  width: 60px;
-  background: lightgray;
-  border-radius: 5px;
 }
 
 .side-column .map {

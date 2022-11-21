@@ -23,8 +23,14 @@ export type StationInformation = {
   capacity: number;
 };
 
+export type StationNearby = {
+  distance: number;
+  station: StationDetail;
+};
+
 export type StationDetail = {
   info: StationInformation;
   current_status: StationStatus;
   history: StationStatus[];
+  nearby: StationNearby[];
 };

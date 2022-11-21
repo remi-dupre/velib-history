@@ -8,6 +8,7 @@ import { dayStartTimestamp } from "../util/time";
 import FillCircle from "./FillCircle";
 import FillHistory from "./FillHistory";
 import Links from "./Links";
+import StationList from "./StationList";
 
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -23,12 +24,12 @@ export default function StationView(): JSX.Element {
   const [detail, setDetail] = useState<StationDetail | undefined>(undefined);
 
   useEffect(() => {
-    const timeout = detail ? 30000 : 0;
+    // TODO: fix this refresh mechanism
+    const timeout =
+      detail && detail.current_status.station_id === id ? 30000 * 1000 : 0;
 
     setTimeout(() => {
-      fetch(
-        `https://velib-history-api.dupre.io/stations/${id}/history?from=${from}`
-      )
+      fetch(`http://localhost:9000/stations/${id}/history?from=${from}`)
         .then((res) => res.json())
         .then(
           (result) => {
@@ -107,28 +108,7 @@ export default function StationView(): JSX.Element {
           <Marker position={[detail.info.lat, detail.info.lon]} />
         </MapContainer>
         <h3>Stations nearby</h3>
-        <ul className="stations-list">
-          {[1, 2, 3, 4].map(() => (
-            <li>
-              <FillCircle
-                size={40}
-                capacity={capacity}
-                mechanical={mechanical}
-                ebike={ebike}
-                withLabel={false}
-              />
-              <div className="detail">
-                <h4>{detail.info.name}</h4> (368m)
-                <br />
-                <p>
-                  {mechanical} mechanical, {ebike} electrical,{" "}
-                  {capacity - mechanical - ebike} free
-                </p>
-              </div>
-              <div className="graph" />
-            </li>
-          ))}
-        </ul>
+        <StationList details={detail.nearby} />
         <h3>Links</h3>
         <Links />
       </section>
