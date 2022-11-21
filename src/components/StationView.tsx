@@ -29,7 +29,9 @@ export default function StationView(): JSX.Element {
       detail && detail.current_status.station_id === id ? 30000 * 1000 : 0;
 
     setTimeout(() => {
-      fetch(`http://localhost:9000/stations/${id}/history?from=${from}`)
+      fetch(
+        `https://velib-history-api.dupre.io/stations/${id}/history?from=${from}`
+      )
         .then((res) => res.json())
         .then(
           (result) => {
