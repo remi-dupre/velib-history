@@ -9,6 +9,11 @@ import FillCircle from "./FillCircle";
 import FillHistory from "./FillHistory";
 import Links from "./Links";
 
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
+import "leaflet-defaulticon-compatibility";
+
 type TParams = { id: string };
 
 export default function StationView(): JSX.Element {
@@ -89,10 +94,21 @@ export default function StationView(): JSX.Element {
         </div>
       </section>
       <section className="side-column">
-        <div style={{ width: "100%", height: "200px", background: "gray" }} />
+        <MapContainer
+          center={[detail.info.lat, detail.info.lon]}
+          zoom={12}
+          zoomControl={false}
+          className="map"
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={[detail.info.lat, detail.info.lon]} />
+        </MapContainer>
         <h3>Stations nearby</h3>
         <ul className="stations-list">
-          {[1, 2, 3].map(() => (
+          {[1, 2, 3, 4].map(() => (
             <li>
               <FillCircle
                 size={40}
