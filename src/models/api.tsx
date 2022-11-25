@@ -24,7 +24,7 @@ export type StationInformation = {
 };
 
 export type StationNearby = {
-  distance: number;
+  dist: number;
   station: StationDetail;
 };
 

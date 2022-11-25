@@ -4,12 +4,12 @@
 
 .fill-circle {
   transform: rotate(-90deg);
+  height: 100%;
 }
 
 .fill-circle circle {
   fill: none;
   stroke-width: 10%;
-  stroke-dasharray: 100 100;
 }
 
 .fill-circle .background {

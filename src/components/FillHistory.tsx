@@ -7,12 +7,15 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  YAxis,
   TooltipProps,
 } from "recharts";
 
 import { StationStatus } from "../models/api";
 import { formatTime, nowTimestamp } from "../util/time";
 import FillCircle from "./FillCircle";
+
+const TICK_INTERVAL = 10;
 
 type FillHistoryParams = {
   from: number;
@@ -74,6 +77,10 @@ export default function FillHistory({
     });
   }
 
+  const ticks = [...Array(capacity + 1).keys()].filter(
+    (v) => (capacity - v) % TICK_INTERVAL === 0 && 2 * v >= TICK_INTERVAL
+  );
+
   return (
     <ResponsiveContainer>
       <ComposedChart data={chartData} height={400}>
@@ -84,6 +91,14 @@ export default function FillHistory({
           allowDecimals={false}
           dataKey="hour"
         />
+
+        <YAxis
+          width={20}
+          domain={[0, capacity]}
+          ticks={ticks}
+          padding={{ top: 12 }}
+        />
+
         <Area
           type="basis"
           isAnimationActive={false}
@@ -93,6 +108,7 @@ export default function FillHistory({
           fill="var(--velib-ebike-color)"
           stroke="var(--velib-ebike-color-dark)"
         />
+
         <Area
           type="basis"
           isAnimationActive={false}
@@ -102,7 +118,9 @@ export default function FillHistory({
           fill="var(--velib-mechanical-color)"
           stroke="var(--velib-mechanical-color-dark)"
         />
+
         <ReferenceLine y={capacity} stroke="gray" strokeDasharray="4 6" />
+
         <Tooltip
           content={<CustomTooltip />}
           wrapperStyle={{ outline: "none" }}

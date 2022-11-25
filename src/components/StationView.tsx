@@ -9,40 +9,51 @@ import FillCircle from "./FillCircle";
 import FillHistory from "./FillHistory";
 import Links from "./Links";
 import StationList from "./StationList";
+import config from "../config.json";
 
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet-defaulticon-compatibility";
 
+const UPDATE_FREQUENCY = 15 * 60;
+
 type TParams = { id: string };
+
+function update(id: number, setDetail: any): NodeJS.Timer {
+  const from = dayStartTimestamp();
+
+  function update() {
+    fetch(`${config.API}/stations/${id}/history?from=${from}`)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setDetail(result as StationDetail);
+        },
+        (error) => {
+          console.error(`Could not load station details: ${error}`);
+        }
+      );
+  }
+
+  update();
+  return setInterval(update, UPDATE_FREQUENCY * 1000);
+}
 
 export default function StationView(): JSX.Element {
   const from = dayStartTimestamp();
   const params = useParams<TParams>();
   const id = Number(params.id);
   const [detail, setDetail] = useState<StationDetail | undefined>(undefined);
+  const [updateInterval, _] = useState<NodeJS.Timer[]>([]);
 
   useEffect(() => {
-    // TODO: fix this refresh mechanism
-    const timeout =
-      detail && detail.current_status.station_id === id ? 30000 * 1000 : 0;
+    while (updateInterval.length > 0) {
+      clearInterval(updateInterval.pop());
+    }
 
-    setTimeout(() => {
-      fetch(
-        `https://velib-history-api.dupre.io/stations/${id}/history?from=${from}`
-      )
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setDetail(result as StationDetail);
-          },
-          (error) => {
-            console.error(`Could not load station details: ${error}`);
-          }
-        );
-    }, timeout);
-  });
+    updateInterval.push(update(id, setDetail));
+  }, [id]);
 
   if (!detail) {
     return (
@@ -52,11 +63,8 @@ export default function StationView(): JSX.Element {
     );
   }
 
-  const capacity = detail.info.capacity;
   const { mechanical, ebike } = detail.current_status.num_bikes_available_types;
-
-  // const last_update = new Date(detail.current_status.last_reported * 1000);
-  // <span className="last-update">{`Last updated: ${last_update.toISOString()}`}</span>
+  const capacity = detail.info.capacity;
 
   return (
     <div className="station-view">
@@ -70,19 +78,17 @@ export default function StationView(): JSX.Element {
               mechanical={mechanical}
               ebike={ebike}
             />
-            <div>
-              <ul className="detail">
-                <li>
-                  <strong>{mechanical}</strong> mechanical
-                </li>
-                <li>
-                  <strong>{ebike}</strong> electrical
-                </li>
-                <li>
-                  <strong>{capacity - mechanical - ebike}</strong> free
-                </li>
-              </ul>
-            </div>
+            <ul className="detail">
+              <li>
+                <strong>{mechanical}</strong> mechanical
+              </li>
+              <li>
+                <strong>{ebike}</strong> electrical
+              </li>
+              <li>
+                <strong>{capacity - mechanical - ebike}</strong> free
+              </li>
+            </ul>
           </div>
         </div>
         <div>

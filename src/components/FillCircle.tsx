@@ -1,5 +1,8 @@
 import "../style/FillCircle.css";
 
+const RADIUS = 15;
+const PERIMETER = 2 * Math.PI * RADIUS;
+
 type FillCircleParams = {
   size: number;
   capacity: number;
@@ -37,22 +40,29 @@ export default function FillCircle({
         viewBox="-1 -1 34 34"
         className="fill-circle"
       >
-        <circle cx="16" cy="16" r="15" className="background" />
-
         <circle
-          cx="16"
-          cy="16"
-          r="15"
-          className="mechanical"
-          strokeDashoffset={100 - mechanicalPercentage * 100}
+          cx={RADIUS + 1}
+          cy={RADIUS + 1}
+          r={RADIUS}
+          className="background"
         />
 
         <circle
-          cx="16"
-          cy="16"
-          r="15"
+          cx={RADIUS + 1}
+          cy={RADIUS + 1}
+          r={RADIUS}
+          className="mechanical"
+          strokeDasharray={PERIMETER}
+          strokeDashoffset={PERIMETER * (1 - mechanicalPercentage)}
+        />
+
+        <circle
+          cx={RADIUS + 1}
+          cy={RADIUS + 1}
+          r={RADIUS}
           className="ebike"
-          strokeDashoffset={100 - ebikePercentage * 100}
+          strokeDasharray={PERIMETER}
+          strokeDashoffset={PERIMETER * (1 - ebikePercentage)}
         />
       </svg>
     </div>

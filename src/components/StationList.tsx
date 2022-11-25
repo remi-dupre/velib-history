@@ -11,7 +11,7 @@ function StationListItem(nearby: StationNearby): JSX.Element {
   const { mechanical, ebike } = detail.current_status.num_bikes_available_types;
 
   return (
-    <li>
+    <li key={detail.info.station_id}>
       <Link to={`/station/${detail.info.station_id}`}>
         <FillCircle
           size={40}
@@ -24,7 +24,7 @@ function StationListItem(nearby: StationNearby): JSX.Element {
           <h4>{detail.info.name}</h4>
           <br />
           <p>
-            {Math.trunc(nearby.distance)}m, {mechanical} mechanical, {ebike}{" "}
+            {Math.trunc(nearby.dist)}m, {mechanical} mechanical, {ebike}{" "}
             electrical, {capacity - mechanical - ebike} free
           </p>
         </div>

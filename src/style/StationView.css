@@ -12,16 +12,25 @@
 }
 
 .station-view .recap {
-  margin-left: 40px;
   margin-bottom: 30px;
-  display: flex;
   align-items: center;
+  max-width: 400px;
+  text-align: center;
 }
 
 .station-view .recap .detail {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
   list-style: none;
   font-size: 1.5em;
-  margin: 0 10px;
+  margin: 0 0px;
+  padding-left: 25px;
+}
+
+.station-view .fill-circle-container {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .station-view .last-update {
