@@ -10,6 +10,21 @@ body {
   --velib-ebike-color: #61c3dc;
   --velib-mechanical-color-dark: #476f29;
   --velib-ebike-color-dark: #3d7e8e;
+  --velib-station-dark: #5e5e5e;
+  --dim-color: #e2eff0;
+  --background-color: white;
+}
+
+.mechanical {
+  color: var(--velib-mechanical-color-dark);
+}
+
+.ebike {
+  color: var(--velib-ebike-color-dark);
+}
+
+.station {
+  color: var(--velib-station-dark);
 }
 
 #root {

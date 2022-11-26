@@ -13,7 +13,7 @@
 }
 
 .fill-circle .background {
-  stroke: #e2eff0;
+  stroke: var(--dim-color);
 }
 
 .fill-circle .mechanical {

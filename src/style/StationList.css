@@ -1,24 +1,43 @@
 .stations-list {
   list-style: none;
-  padding-left: 16px;
+  padding-left: 8px;
+}
+
+.stations-list li {
+  margin: 0;
+  padding: 0;
 }
 
 .stations-list a {
   display: inherit;
   color: inherit;
   text-decoration: inherit;
-  width: 100%;
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  position: relative;
+  background: var(--background-color);
 }
 
-.stations-list li {
-  margin: 0;
-  padding: 10px 0;
-  display: flex;
+.stations-list a:hover {
+  --dim-color: white;
+  --background-color: #e2eff0;
+}
+
+.stations-list a > * {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .stations-list .detail {
   margin-left: 8px;
   font-size: 14px;
+}
+
+.stations-list .detail .svg-inline--fa {
+  margin-left: 2px;
+  font-size: 11px;
 }
 
 .stations-list .detail h4 {
@@ -31,9 +50,20 @@
   display: inline;
 }
 
-.stations-list .graph {
-  margin-left: auto;
+.stations-list .graph-container {
+  padding-left: 8px;
+  position: absolute;
+  right: 8px;
+  background: var(--background-color);
   width: 60px;
-  background: lightgray;
+  height: 40px;
+}
+
+.stations-list .graph {
+  background: var(--dim-color);
   border-radius: 5px;
+}
+
+.stations-list .graph svg {
+  cursor: pointer;
 }

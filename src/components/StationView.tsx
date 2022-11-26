@@ -3,6 +3,17 @@ import "../style/StationView.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faGear,
+  faBolt,
+  faChargingStation,
+} from "@fortawesome/free-solid-svg-icons";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
+import "leaflet-defaulticon-compatibility";
+
 import { StationDetail } from "../models/api";
 import { dayStartTimestamp } from "../util/time";
 import FillCircle from "./FillCircle";
@@ -11,12 +22,7 @@ import Links from "./Links";
 import StationList from "./StationList";
 import config from "../config.json";
 
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
-import "leaflet-defaulticon-compatibility";
-
-const UPDATE_FREQUENCY = 15 * 60;
+const UPDATE_FREQUENCY = 30;
 
 type TParams = { id: string };
 
@@ -24,7 +30,7 @@ function update(id: number, setDetail: any): NodeJS.Timer {
   const from = dayStartTimestamp();
 
   function update() {
-    fetch(`${config.API}/stations/${id}/history?from=${from}`)
+    fetch(`${config.api}/stations/${id}/history?from=${from}`)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -80,13 +86,23 @@ export default function StationView(): JSX.Element {
             />
             <ul className="detail">
               <li>
-                <strong>{mechanical}</strong> mechanical
+                <strong className="mechanical">
+                  {mechanical} <FontAwesomeIcon icon={faGear} />{" "}
+                </strong>
+                mechanical
               </li>
               <li>
-                <strong>{ebike}</strong> electrical
+                <strong className="ebike">
+                  {ebike} <FontAwesomeIcon icon={faBolt} />{" "}
+                </strong>
+                electrical
               </li>
               <li>
-                <strong>{capacity - mechanical - ebike}</strong> free
+                <strong className="station">
+                  {capacity - mechanical - ebike}{" "}
+                  <FontAwesomeIcon icon={faChargingStation} />{" "}
+                </strong>
+                free
               </li>
             </ul>
           </div>
@@ -97,7 +113,7 @@ export default function StationView(): JSX.Element {
             <FillHistory
               from={from}
               capacity={capacity}
-              history={detail.history}
+              history={detail.history ?? detail.today_history}
             />
           </div>
         </div>

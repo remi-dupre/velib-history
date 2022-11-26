@@ -18,7 +18,7 @@ export default function Links() {
         </a>
       </li>
       <li>
-        <a href="https://github.com/remi-dupre">
+        <a href="https://github.com/remi-dupre/velib-history">
           <FontAwesomeIcon icon={faGithubAlt} /> Github
         </a>
       </li>

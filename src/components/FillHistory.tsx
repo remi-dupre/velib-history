@@ -18,9 +18,11 @@ import FillCircle from "./FillCircle";
 const TICK_INTERVAL = 10;
 
 type FillHistoryParams = {
+  className?: string;
   from: number;
   capacity: number;
   history: StationStatus[];
+  mini?: boolean;
 };
 
 function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
@@ -54,10 +56,14 @@ function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
 }
 
 export default function FillHistory({
+  className,
   from,
   capacity,
   history,
+  mini,
 }: FillHistoryParams): JSX.Element {
+  const isMini = mini ?? false;
+
   const chartData = history.map((info) => ({
     hour: Math.max(0, (info.last_reported - from) / 3600),
     label: formatTime(info.last_reported),
@@ -82,23 +88,12 @@ export default function FillHistory({
   );
 
   return (
-    <ResponsiveContainer>
-      <ComposedChart data={chartData} height={400}>
-        <XAxis
-          type="number"
-          domain={[0, 24]}
-          ticks={[6, 12, 18, 24]}
-          allowDecimals={false}
-          dataKey="hour"
-        />
-
-        <YAxis
-          width={20}
-          domain={[0, capacity]}
-          ticks={ticks}
-          padding={{ top: 12 }}
-        />
-
+    <ResponsiveContainer className={className}>
+      <ComposedChart
+        data={chartData}
+        height={400}
+        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+      >
         <Area
           type="basis"
           isAnimationActive={false}
@@ -119,12 +114,35 @@ export default function FillHistory({
           stroke="var(--velib-mechanical-color-dark)"
         />
 
-        <ReferenceLine y={capacity} stroke="gray" strokeDasharray="4 6" />
-
-        <Tooltip
-          content={<CustomTooltip />}
-          wrapperStyle={{ outline: "none" }}
+        <XAxis
+          hide={isMini}
+          type="number"
+          domain={[0, 24]}
+          ticks={[6, 12, 18, 24]}
+          allowDecimals={false}
+          dataKey="hour"
         />
+
+        <YAxis
+          hide={isMini}
+          width={25}
+          domain={[0, capacity]}
+          ticks={ticks}
+          padding={{ top: 12 }}
+        />
+
+        <ReferenceLine x={(now - from) / 3600} stroke="darkgray" />
+
+        {!isMini && (
+          <>
+            <ReferenceLine y={capacity} stroke="gray" strokeDasharray="4 6" />
+
+            <Tooltip
+              content={<CustomTooltip />}
+              wrapperStyle={{ outline: "none" }}
+            />
+          </>
+        )}
       </ComposedChart>
     </ResponsiveContainer>
   );

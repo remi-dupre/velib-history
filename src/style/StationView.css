@@ -25,7 +25,19 @@
   list-style: none;
   font-size: 1.5em;
   margin: 0 0px;
-  padding-left: 25px;
+  padding-left: 20px;
+}
+
+.station-view .recap .detail strong {
+  display: inline-block;
+  width: 70px;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.station-view .recap .detail strong .svg-inline--fa {
+  width: 25px;
+  font-size: 20px;
 }
 
 .station-view .fill-circle-container {
@@ -44,6 +56,7 @@
 
 .station-view .side-column {
   flex: 1 1 350px;
+  max-width: 100%;
 }
 
 .side-column h3 {
