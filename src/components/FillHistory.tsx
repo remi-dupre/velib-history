@@ -3,6 +3,8 @@ import "../style/FillHistory.css";
 import {
   Area,
   ComposedChart,
+  Legend,
+  Line,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -104,6 +106,7 @@ export default function FillHistory({
           dataKey="ebike"
           fill="var(--velib-ebike-color)"
           stroke="var(--velib-ebike-color-dark)"
+          legendType="rect"
         />
 
         <Area
@@ -114,6 +117,7 @@ export default function FillHistory({
           dataKey="mechanical"
           fill="var(--velib-mechanical-color)"
           stroke="var(--velib-mechanical-color-dark)"
+          legendType="rect"
         />
 
         <XAxis
@@ -153,6 +157,16 @@ export default function FillHistory({
         {!isMini && (
           <>
             <ReferenceLine y={capacity} stroke="gray" strokeDasharray="4 6" />
+
+            <Line
+              name="estimate"
+              dataKey="does-not-exist"
+              stroke="black"
+              strokeDasharray="3 5"
+              legendType="plainline"
+            />
+
+            <Legend align="right" verticalAlign="top" />
 
             <Tooltip
               content={<CustomTooltip />}
