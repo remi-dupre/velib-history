@@ -32,6 +32,7 @@ export type StationDetail = {
   info: StationInformation;
   current_status: StationStatus;
   today_history: StationStatus[];
+  today_estimate: StationStatus[];
   history?: StationStatus[];
   nearby: StationNearby[];
 };

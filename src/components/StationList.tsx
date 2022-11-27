@@ -54,6 +54,7 @@ function StationListItem(nearby: StationNearby): JSX.Element {
             from={from}
             capacity={capacity}
             history={detail.today_history}
+            estimate={detail.today_estimate}
             mini={true}
           />
         </div>

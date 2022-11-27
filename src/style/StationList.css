@@ -55,14 +55,8 @@
   padding-left: 8px;
   position: absolute;
   right: 8px;
-  background: var(--background-color);
   width: 65px;
   height: 40px;
-}
-
-.stations-list .graph {
-  background: var(--dim-color);
-  border-radius: 5px;
 }
 
 .stations-list .graph svg {

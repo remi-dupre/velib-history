@@ -51,7 +51,7 @@ export default function StationView(): JSX.Element {
   const params = useParams<TParams>();
   const id = Number(params.id);
   const [detail, setDetail] = useState<StationDetail | undefined>(undefined);
-  const [updateInterval, _] = useState<NodeJS.Timer[]>([]);
+  const [updateInterval] = useState<NodeJS.Timer[]>([]);
 
   useEffect(() => {
     while (updateInterval.length > 0) {
@@ -59,7 +59,7 @@ export default function StationView(): JSX.Element {
     }
 
     updateInterval.push(update(id, setDetail));
-  }, [id]);
+  }, [id, updateInterval]);
 
   if (!detail) {
     return (
@@ -114,6 +114,7 @@ export default function StationView(): JSX.Element {
               from={from}
               capacity={capacity}
               history={detail.history ?? detail.today_history}
+              estimate={detail.today_estimate}
             />
           </div>
         </div>

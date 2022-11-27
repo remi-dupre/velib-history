@@ -22,6 +22,7 @@ type FillHistoryParams = {
   from: number;
   capacity: number;
   history: StationStatus[];
+  estimate: StationStatus[];
   mini?: boolean;
 };
 
@@ -60,6 +61,7 @@ export default function FillHistory({
   from,
   capacity,
   history,
+  estimate,
   mini,
 }: FillHistoryParams): JSX.Element {
   const isMini = mini ?? false;
@@ -116,6 +118,7 @@ export default function FillHistory({
 
         <XAxis
           hide={isMini}
+          tickSize={3}
           type="number"
           domain={[0, 24]}
           ticks={[6, 12, 18, 24]}
@@ -125,13 +128,27 @@ export default function FillHistory({
 
         <YAxis
           hide={isMini}
-          width={25}
+          width={20}
+          tickSize={3}
           domain={[0, capacity]}
           ticks={ticks}
           padding={{ top: 12 }}
         />
 
         <ReferenceLine x={(now - from) / 3600} stroke="darkgray" />
+
+        {[...Array(24).keys()].map((i) => (
+          <ReferenceLine
+            isFront={true}
+            stroke="black"
+            strokeWidth={1}
+            strokeDasharray={isMini ? "1 5" : "3 5"}
+            segment={[
+              { x: i, y: estimate[i].num_bikes_available },
+              { x: i + 1, y: estimate[i + 1].num_bikes_available },
+            ]}
+          />
+        ))}
 
         {!isMini && (
           <>
