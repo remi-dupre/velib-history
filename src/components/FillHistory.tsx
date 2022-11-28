@@ -63,10 +63,40 @@ export default function FillHistory({
   from,
   capacity,
   history,
-  estimate,
-  mini,
+  ...params
 }: FillHistoryParams): JSX.Element {
-  const isMini = mini ?? false;
+  const mini = params.mini ?? false;
+  const now = nowTimestamp();
+  const estimateStart = params.estimate[0].last_reported;
+
+  // Trucate the estimate to only be displayed for the end of the day in mini mode
+  const estimate: StationStatus[] = mini ? [] : params.estimate;
+
+  if (mini) {
+    for (let i = 0; i < params.estimate.length; i++) {
+      const x = params.estimate[i];
+
+      if (i + 1 >= params.estimate.length) {
+        estimate.push(x);
+        break;
+      }
+
+      const y = params.estimate[i + 1];
+
+      if (y.last_reported < now) {
+        continue;
+      }
+
+      // Cut the segment at the intersection with now
+      if (x.last_reported < now) {
+        x.num_bikes_available *=
+          (now - x.last_reported) / (y.last_reported - x.last_reported);
+        x.last_reported = now;
+      }
+
+      estimate.push(x);
+    }
+  }
 
   const chartData = history.map((info) => ({
     hour: Math.max(0, (info.last_reported - from) / 3600),
@@ -76,7 +106,6 @@ export default function FillHistory({
     capacity: capacity,
   }));
 
-  const now = nowTimestamp();
   const lastData = chartData.at(-1);
 
   if (now - from < 24 * 3600 && lastData) {
@@ -121,7 +150,7 @@ export default function FillHistory({
         />
 
         <XAxis
-          hide={isMini}
+          hide={mini}
           tickSize={3}
           type="number"
           domain={[0, 24]}
@@ -131,7 +160,7 @@ export default function FillHistory({
         />
 
         <YAxis
-          hide={isMini}
+          hide={mini}
           width={20}
           tickSize={3}
           domain={[0, capacity]}
@@ -141,27 +170,33 @@ export default function FillHistory({
 
         <ReferenceLine x={(now - from) / 3600} stroke="darkgray" />
 
-        {[...Array(24).keys()].map((i) => (
+        {[...Array(estimate.length - 1).keys()].map((i) => (
           <ReferenceLine
             isFront={true}
-            stroke="black"
+            stroke="var(--velib-station-dark)"
             strokeWidth={1}
-            strokeDasharray={isMini ? "1 5" : "3 5"}
+            strokeDasharray={mini ? "1 1" : "3 5"}
             segment={[
-              { x: i, y: estimate[i].num_bikes_available },
-              { x: i + 1, y: estimate[i + 1].num_bikes_available },
+              {
+                x: (estimate[i].last_reported - estimateStart) / 3600,
+                y: estimate[i].num_bikes_available,
+              },
+              {
+                x: (estimate[i + 1].last_reported - estimateStart) / 3600,
+                y: estimate[i + 1].num_bikes_available,
+              },
             ]}
           />
         ))}
 
-        {!isMini && (
+        {!mini && (
           <>
             <ReferenceLine y={capacity} stroke="gray" strokeDasharray="4 6" />
 
             <Line
               name="estimate"
               dataKey="does-not-exist"
-              stroke="black"
+              stroke="var(--velib-station-dark)"
               strokeDasharray="3 5"
               legendType="plainline"
             />
